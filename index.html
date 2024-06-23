@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,7 +48,7 @@
 		table input[type="text"] {
 			margin-bottom: 0px;
 			padding-right: 70px;
-			min-width: 100px;
+			min-width: 170px;
 		}
 		input[type="number"] {
             width: 70px;
@@ -269,7 +269,6 @@
 			
 			passwordField.value = password;
 			passwordField.getAttribute('type') === 'password' ? eyeIcon.click() : 0;
-			passwordField.focus();
 		}
 		
 		function getPasswordField(element) {
@@ -308,6 +307,7 @@
 				passwordField.value = tmpValue;
 				tmpChange ? passwordField.setAttribute('type', 'password') : 0;
 				element.classList.remove('disabled-span');
+				passwordField.focus();
 			}, 200);
 		}
 		
