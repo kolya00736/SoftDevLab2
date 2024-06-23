@@ -395,7 +395,9 @@
         </script>
         <script>
             if (navigator.serviceWorker) {
-                navigator.serviceWorker.register("/SoftDevLab2/sw.js", { scope: "/SoftDevLab2/" }).catch((error) => {});
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register("/SoftDevLab2/sw.js", { scope: "/SoftDevLab2/" }).catch((error) => {});
+                });
             }
         </script>
     </body>
