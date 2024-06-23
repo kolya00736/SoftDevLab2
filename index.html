@@ -173,19 +173,19 @@
 			<details>
 				<summary>Generation Options</summary>
 				<ul>
-					<span id="rangeValue">Length: </span>
+					<span id="rangeValue">Length (4-128): </span>
 					<input type="number" step="1" min="4" max="128" value="16" id="passwordRange" onblur="this.value = Math.max(Math.min(this.value, 128), 4)" onmousewheel>
 					<li>
 						<input type="checkbox" id="uppercase" name="uppercase" checked/>
-						<label for="uppercase">Uppercase (A-Z)</label>
+						<label for="uppercase">Uppercase (A - Z)</label>
 					</li>
 					<li>
 						<input type="checkbox" id="lowercase" name="lowercase" checked/>
-						<label for="lowercase">Lowercase (a-z)</label>
+						<label for="lowercase">Lowercase (a - z)</label>
 					</li>
 					<li>
 						<input type="checkbox" id="numbers" name="numbers" checked/>
-						<label for="numbers">Numbers (0-9)</label>
+						<label for="numbers">Numbers (0 - 9)</label>
 					</li>
 					<li>
 						<input type="checkbox" id="symbols" name="symbols" checked/>
