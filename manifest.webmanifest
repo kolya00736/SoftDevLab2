@@ -1,0 +1,17 @@
+{
+	"name": "Password Manager",
+	"short_name": "PwdManager",
+	"description": "Browser-based password manager",
+	"scope": "/SoftDevLab2/",
+	"start_url": "/SoftDevLab2/",
+	"background_color": "#ffffff",
+	"theme_color": "#ffffff",
+	"display": "standalone", 
+	"icons": [
+		{
+			"src": "/SoftDevLab2/favicon.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	]
+}
