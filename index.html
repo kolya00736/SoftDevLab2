@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, minimal-ui, user-scalable=no">
 	<meta name="google" content="notranslate"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 	<link rel="icon" href="favicon.png">
@@ -21,6 +21,9 @@
             border-collapse: collapse;
 			margin-bottom: 10px;
         }
+		.table-container {
+			overflow-x: auto;
+		}
 		td:first-child {
 			width: 1%;
 		}
@@ -140,17 +143,19 @@
 </head>
 <body>
     <h1>Password Manager</h1>
-    <table>
-        <thead>
-            <tr>
-				<th><input type="checkbox" id="selectAll"/></th>
-                <th>Login</th>
-                <th>Password</th>
-                <th>URL</th>
-            </tr>
-        </thead>
-        <tbody id="passwordsTableBody"></tbody>
-    </table>
+	<div class="table-container">
+		<table>
+			<thead>
+				<tr>
+					<th><input type="checkbox" id="selectAll"/></th>
+					<th>Login</th>
+					<th>Password</th>
+					<th>URL</th>
+				</tr>
+			</thead>
+			<tbody id="passwordsTableBody"></tbody>
+		</table>
+	</div>
 	<button id="deleteRecords" hidden>Delete selected records</button>
 	<fieldset>
 		<legend>Add Password</legend>
@@ -312,6 +317,12 @@
 			}, 200);
 		}
 		
+		function recCheck(element) {
+			selectAllCheck.checked = element.checked
+				? document.querySelectorAll('input[type="checkbox"][name="record"]:checked').length === passwordsTableBody.rows.length
+				: !(document.querySelectorAll('input[type="checkbox"][name="record"]').length === passwordsTableBody.rows.length);
+		}
+		
         function loadPasswords() {
             passwordsTableBody.innerHTML = '';
             const passwords = JSON.parse(localStorage.getItem('passwords')) || [];
@@ -320,7 +331,7 @@
 			    passwords.forEach((password, index) => {
 					const row = document.createElement('tr');
 					row.innerHTML = `
-						<td><input type="checkbox" name= "record" id="${index}"/></td>
+						<td><input type="checkbox" onclick="recCheck(this)" name= "record" id="${index}"/></td>
 						<td>${password.login}</td>
 						<td>
 							<div class="password-container">
@@ -375,9 +386,7 @@
 	<script>
 		if (navigator.serviceWorker) {
 			navigator.serviceWorker.register('/SoftDevLab2/sw.js', {scope: '/SoftDevLab2/'})
-			.catch(error => {
-				console.error('ServiceWorker registration failed:', error);
-			});
+			.catch(error => {});
 		}
 	</script>
 </body>
