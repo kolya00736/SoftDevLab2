@@ -1,397 +1,402 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=no" />
-    <meta name="google" content="notranslate" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
-    <link rel="icon" href="favicon.png" />
-    <link rel="manifest" href="/SoftDevLab2/manifest.webmanifest" />
-    <title>Password Manager</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 10px;
-      }
-      h1 {
-        text-align: center;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 10px;
-      }
-      .table-container {
-        overflow-x: auto;
-      }
-      td:first-child {
-        width: 1%;
-      }
-      th,
-      td {
-        border: 1px solid #ccc;
-        padding: 8px;
-        text-align: left;
-        white-space: nowrap;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-      input[type="text"],
-      input[type="password"],
-      input[type="url"],
-      input[type="number"] {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        border: 1px solid #767676;
-        box-sizing: border-box;
-        outline: none;
-      }
-      input[id="password"] {
-        padding-right: 70px;
-      }
-      table input[type="password"],
-      table input[type="text"] {
-        margin-bottom: 0px;
-        padding-right: 70px;
-        min-width: 170px;
-      }
-      input[type="number"] {
-        width: 70px;
-        margin-bottom: 0;
-      }
-      button {
-        width: 100%;
-        padding: 10px 15px;
-        margin-top: 5px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #45a049;
-      }
-      .password-container {
-        position: relative;
-      }
-      .firstIcon {
-        position: absolute;
-        top: 40%;
-        right: 40px;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        cursor: pointer;
-      }
-      .secondIcon {
-        position: absolute;
-        top: 40%;
-        right: 10px;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        cursor: pointer;
-      }
-      table .firstIcon {
-        top: 50%;
-      }
-      table .secondIcon {
-        top: 50%;
-      }
-      i {
-        font-size: 16px;
-        color: #bbbbbb;
-      }
-      legend {
-        padding: 3px 6px;
-      }
-      fieldset {
-        border: 1px solid #cccccc;
-        margin: auto;
-        margin-top: 10px;
-        padding-bottom: 15px;
-      }
-      input[type="checkbox"] {
-        margin: 0;
-        cursor: pointer;
-        vertical-align: middle;
-      }
-      label {
-        cursor: pointer;
-        vertical-align: middle;
-      }
-      ul {
-        margin: 0;
-        padding: 5px 10px;
-        list-style-type: none;
-      }
-      li {
-        margin: 10px 0;
-      }
-      details {
-        border: 1px solid #757575;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        font-size: 13px;
-      }
-      summary {
-        cursor: pointer;
-        color: #757575;
-        padding: 8px;
-      }
-      .disabled-span {
-        pointer-events: none;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Password Manager</h1>
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th><input type="checkbox" id="selectAll" /></th>
-            <th>Login</th>
-            <th>Password</th>
-            <th>URL</th>
-          </tr>
-        </thead>
-        <tbody id="passwordsTableBody"></tbody>
-      </table>
-    </div>
-    <button id="deleteRecords" hidden>Delete selected records</button>
-    <fieldset>
-      <legend>Add Password</legend>
-      <form id="passwordForm">
-        <input type="text" id="login" placeholder="Login" required />
-        <div class="password-container">
-          <input type="password" id="password" placeholder="Password" required />
-          <span class="firstIcon" onclick="generatePassword()">
-            <i class="fas fa-sync-alt" title="Generate Password"></i>
-          </span>
-          <span class="secondIcon" id="eyeIcon" onclick="togglePassword(this)">
-            <i class="fas fa-eye-slash" title="Show Password"></i>
-          </span>
+	<head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=no" />
+        <meta name="google" content="notranslate" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
+        <link rel="icon" href="favicon.png" />
+        <link rel="manifest" href="/SoftDevLab2/manifest.webmanifest" />
+        <title>Password Manager</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 10px;
+            }
+            h1 {
+                text-align: center;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 10px;
+            }
+            .table-container {
+                overflow-x: auto;
+            }
+            td:first-child {
+                width: 1%;
+            }
+            th,
+            td {
+                border: 1px solid #ccc;
+                padding: 8px;
+                text-align: left;
+                white-space: nowrap;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            input[type="text"],
+            input[type="password"],
+            input[type="url"],
+            input[type="number"] {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+                border-radius: 5px;
+                border: 1px solid #767676;
+                box-sizing: border-box;
+                outline: none;
+            }
+            input[id="password"] {
+                padding-right: 70px;
+            }
+            table input[type="password"],
+            table input[type="text"] {
+                margin-bottom: 0px;
+                padding-right: 70px;
+                min-width: 170px;
+            }
+            input[type="number"] {
+                width: 70px;
+                margin-bottom: 0;
+            }
+            button {
+                width: 100%;
+                padding: 10px 15px;
+                margin-top: 5px;
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #45a049;
+            }
+            .password-container {
+                position: relative;
+            }
+            .firstIcon {
+                position: absolute;
+                top: 40%;
+                right: 40px;
+                transform: translateY(-50%);
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
+            .secondIcon {
+                position: absolute;
+                top: 40%;
+                right: 10px;
+                transform: translateY(-50%);
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
+            table .firstIcon {
+                top: 50%;
+            }
+            table .secondIcon {
+                top: 50%;
+            }
+            i {
+                font-size: 16px;
+                color: #bbbbbb;
+            }
+            legend {
+                padding: 3px 6px;
+            }
+            fieldset {
+                border: 1px solid #cccccc;
+                margin: auto;
+                margin-top: 10px;
+                padding-bottom: 15px;
+            }
+            input[type="checkbox"] {
+                margin: 0;
+                cursor: pointer;
+                vertical-align: middle;
+            }
+            label {
+                cursor: pointer;
+                vertical-align: middle;
+            }
+            ul {
+                margin: 0;
+                padding: 5px 10px;
+                list-style-type: none;
+            }
+            li {
+                margin: 10px 0;
+            }
+            details {
+                border: 1px solid #757575;
+                border-radius: 5px;
+                margin-bottom: 10px;
+                font-size: 13px;
+            }
+            summary {
+                cursor: pointer;
+                color: #757575;
+                padding: 8px;
+            }
+            .disabled-span {
+                pointer-events: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Password Manager</h1>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll" /></th>
+                        <th>Login</th>
+                        <th>Password</th>
+                        <th>URL</th>
+                    </tr>
+                </thead>
+                <tbody id="passwordsTableBody"></tbody>
+            </table>
         </div>
-        <details>
-          <summary>Generation Options</summary>
-          <ul>
-            <span id="rangeValue">Length (4-128): </span>
-            <input type="number" step="1" min="4" max="128" value="16" id="passwordRange" onblur="this.value = Math.max(Math.min(this.value, 128), 4)" onmousewheel />
-            <li>
-              <input type="checkbox" id="uppercase" name="uppercase" checked />
-              <label for="uppercase">Uppercase (A - Z)</label>
-            </li>
-            <li>
-              <input type="checkbox" id="lowercase" name="lowercase" checked />
-              <label for="lowercase">Lowercase (a - z)</label>
-            </li>
-            <li>
-              <input type="checkbox" id="numbers" name="numbers" checked />
-              <label for="numbers">Numbers (0 - 9)</label>
-            </li>
-            <li>
-              <input type="checkbox" id="symbols" name="symbols" checked />
-              <label for="symbols">Special symbols (# $ % & @ ^ ` ~)</label>
-            </li>
-          </ul>
-        </details>
-        <input type="url" id="url" oninput="fixURL(this)" placeholder="URL" required />
-        <button type="submit">Add</button>
-      </form>
-    </fieldset>
-    <script>
-      const passwordsTableBody = document.getElementById("passwordsTableBody");
+        <button id="deleteRecords" hidden>Delete selected records</button>
+        <fieldset>
+            <legend>Add Password</legend>
+            <form id="passwordForm">
+                <input type="text" id="login" placeholder="Login" required />
+                <div class="password-container">
+                    <input type="password" id="password" placeholder="Password" required />
+                    <span class="firstIcon" onclick="generatePassword()">
+                        <i class="fas fa-sync-alt" title="Generate Password"></i>
+                    </span>
+                    <span class="secondIcon" id="eyeIcon" onclick="togglePassword(this)">
+                        <i class="fas fa-eye-slash" title="Show Password"></i>
+                    </span>
+                </div>
+                <details>
+                    <summary>Generation Options</summary>
+                    <ul>
+                        <span id="rangeValue">Length (4-128): </span>
+                        <input type="number" step="1" min="4" max="128" value="16" id="passwordRange" onblur="this.value = Math.max(Math.min(this.value, 128), 4)" onmousewheel />
+                        <li>
+                            <input type="checkbox" id="uppercase" name="uppercase" checked />
+                            <label for="uppercase">Uppercase (A - Z)</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="lowercase" name="lowercase" checked />
+                            <label for="lowercase">Lowercase (a - z)</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="numbers" name="numbers" checked />
+                            <label for="numbers">Numbers (0 - 9)</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="symbols" name="symbols" checked />
+                            <label for="symbols">Special symbols (# $ % & @ ^ ` ~)</label>
+                        </li>
+                    </ul>
+                </details>
+                <input type="url" id="url" oninput="fixURL(this)" placeholder="URL" required />
+                <button type="submit">Add</button>
+            </form>
+        </fieldset>
+        <script>
+            const passwordsTableBody = document.getElementById("passwordsTableBody");
 
-      const passwordForm = document.getElementById("passwordForm");
-      const passwordRange = document.getElementById("passwordRange");
-      const passwordField = document.getElementById("password");
+            const passwordForm = document.getElementById("passwordForm");
+            const passwordRange = document.getElementById("passwordRange");
+            const passwordField = document.getElementById("password");
 
-      const eyeIcon = document.getElementById("eyeIcon");
-      const deleteRecords = document.getElementById("deleteRecords");
-      const selectAllCheck = document.getElementById("selectAll");
+            const eyeIcon = document.getElementById("eyeIcon");
+            const deleteRecords = document.getElementById("deleteRecords");
+            const selectAllCheck = document.getElementById("selectAll");
 
-      selectAllCheck.addEventListener("change", (event) => {
-        document.querySelectorAll('input[type="checkbox"][name="record"]').forEach((checkbox) => {
-          checkbox.checked = event.target.checked;
-        });
-      });
+            selectAllCheck.addEventListener("change", (event) => {
+                document.querySelectorAll('input[type="checkbox"][name="record"]').forEach((checkbox) => {
+                    checkbox.checked = event.target.checked;
+                });
+            });
 
-      deleteRecords.addEventListener("click", function () {
-        const rowsToDelete = [];
-        document.querySelectorAll('input[type="checkbox"][name="record"]:checked').forEach((checkbox) => {
-          rowsToDelete.push(checkbox.closest("tr").rowIndex - 1);
-        });
-        rowsToDelete.sort((a, b) => b - a);
-        rowsToDelete.forEach((index) => {
-          passwordsTableBody.deleteRow(index);
-          deletePassword(index);
-        });
-        selectAllCheck.checked = false;
-      });
+            deleteRecords.addEventListener("click", function () {
+                const rowsToDelete = [];
+                document.querySelectorAll('input[type="checkbox"][name="record"]:checked').forEach((checkbox) => {
+                    rowsToDelete.push(checkbox.closest("tr").rowIndex - 1);
+                });
+                rowsToDelete.sort((a, b) => b - a);
+                rowsToDelete.forEach((index) => {
+                    passwordsTableBody.deleteRow(index);
+                    deletePassword(index);
+                });
+                selectAllCheck.checked = false;
+            });
 
-      function fixURL(urlInput) {
-        if (!urlInput.value.includes("://")) {
-          urlInput.value = "https://" + urlInput.value;
-        }
-      }
+            function fixURL(urlInput) {
+                if (!urlInput.value.includes("://")) {
+                    urlInput.value = "https://" + urlInput.value;
+                }
+            }
 
-      const uppercase = document.getElementById("uppercase");
-      const lowercase = document.getElementById("lowercase");
-      const numbers = document.getElementById("numbers");
-      const symbols = document.getElementById("symbols");
+            const uppercase = document.getElementById("uppercase");
+            const lowercase = document.getElementById("lowercase");
+            const numbers = document.getElementById("numbers");
+            const symbols = document.getElementById("symbols");
 
-      [uppercase, lowercase, numbers, symbols].forEach((checkbox) => {
-        checkbox.addEventListener("change", () => generatePassword());
-      });
+            [uppercase, lowercase, numbers, symbols].forEach((checkbox) => {
+                checkbox.addEventListener("change", () => generatePassword());
+            });
 
-      function createPassword(length, charactersArray) {
-        const characters = charactersArray.join("");
+            function createPassword(length, charactersArray) {
+                const characters = charactersArray.join("");
 
-        function generatePassword() {
-          return Array.from(crypto.getRandomValues(new Uint32Array(length)))
-            .map((x) => characters[x % characters.length])
-            .join("");
-        }
+                function generatePassword() {
+                    return Array.from(crypto.getRandomValues(new Uint32Array(length)))
+                        .map((x) => characters[x % characters.length])
+                        .join("");
+                }
 
-        function passwordIsValid(password) {
-          return charactersArray.every((group) => [...group].some((char) => password.includes(char)));
-        }
+                function passwordIsValid(password) {
+                    return charactersArray.every((group) => [...group].some((char) => password.includes(char)));
+                }
 
-        let password;
-        do {
-          password = generatePassword();
-        } while (!passwordIsValid(password));
+                let password;
+                do {
+                    password = generatePassword();
+                } while (!passwordIsValid(password));
 
-        return password;
-      }
+                return password;
+            }
 
-      function generatePassword() {
-        let charactersArray = [];
+            function generatePassword() {
+                let charactersArray = [];
 
-        if (uppercase.checked) charactersArray.push("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-        if (lowercase.checked) charactersArray.push("abcdefghijklmnopqrstuvwxyz");
-        if (numbers.checked) charactersArray.push("0123456789");
-        if (symbols.checked) charactersArray.push("#$%&@^`~");
+                if (uppercase.checked) charactersArray.push("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+                if (lowercase.checked) charactersArray.push("abcdefghijklmnopqrstuvwxyz");
+                if (numbers.checked) charactersArray.push("0123456789");
+                if (symbols.checked) charactersArray.push("#$%&@^`~");
 
-        const password = createPassword(passwordRange.value, charactersArray);
+                const password = createPassword(passwordRange.value, charactersArray);
 
-        passwordField.value = password;
-        passwordField.getAttribute("type") === "password" ? eyeIcon.click() : 0;
-      }
+                passwordField.value = password;
+                if (passwordField.getAttribute("type") === "password") {
+                    passwordField.setAttribute("type", "text");
+                    element.innerHTML = '<i class="fas fa-eye" title="Hide Password"></i>';
+                }
+            }
 
-      function getPasswordField(element) {
-        return element.closest(".password-container").querySelector("input");
-      }
+            function getPasswordField(element) {
+                return element.closest(".password-container").querySelector("input");
+            }
 
-      function togglePassword(element) {
-        const passwordField = getPasswordField(element);
+            function togglePassword(element) {
+                const passwordField = getPasswordField(element);
 
-        const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
-        passwordField.setAttribute("type", type);
+                const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+                passwordField.setAttribute("type", type);
 
-        element.innerHTML = type === "password" ? '<i class="fas fa-eye-slash" title="Show Password"></i>' : '<i class="fas fa-eye" title="Hide Password"></i>';
+                element.innerHTML = type === "password" 
+					? '<i class="fas fa-eye-slash" title="Show Password"></i>' 
+					: '<i class="fas fa-eye" title="Hide Password"></i>';
 
-        passwordField.focus();
-      }
+                passwordField.focus();
+            }
 
-      function copyPassword(element) {
-        const passwordField = getPasswordField(element);
-        navigator.clipboard.writeText(passwordField.value);
+            function copyPassword(element) {
+                const passwordField = getPasswordField(element);
+                navigator.clipboard.writeText(passwordField.value);
 
-        let tmpChange = false;
-        const tmpValue = passwordField.value;
+                let tmpChange = false;
+                const tmpValue = passwordField.value;
 
-        element.classList.add("disabled-span");
-        passwordField.value = "Copied!";
+                element.classList.add("disabled-span");
+                passwordField.value = "Copied!";
 
-        if (passwordField.getAttribute("type") === "password") {
-          passwordField.setAttribute("type", "text");
-          tmpChange = true;
-        }
+                if (passwordField.getAttribute("type") === "password") {
+                    passwordField.setAttribute("type", "text");
+                    tmpChange = true;
+                }
 
-        setTimeout(() => {
-          passwordField.value = tmpValue;
-          tmpChange ? passwordField.setAttribute("type", "password") : 0;
-          element.classList.remove("disabled-span");
-          passwordField.focus();
-        }, 200);
-      }
+                setTimeout(() => {
+                    passwordField.value = tmpValue;
+                    tmpChange ? passwordField.setAttribute("type", "password") : 0;
+                    element.classList.remove("disabled-span");
+                    passwordField.focus();
+                }, 200);
+            }
 
-      function recCheck(element) {
-        selectAllCheck.checked = element.checked
-          ? document.querySelectorAll('input[type="checkbox"][name="record"]:checked').length === passwordsTableBody.rows.length
-          : !(document.querySelectorAll('input[type="checkbox"][name="record"]').length === passwordsTableBody.rows.length);
-      }
+            function recCheck(element) {
+                selectAllCheck.checked = element.checked
+                    ? document.querySelectorAll('input[type="checkbox"][name="record"]:checked').length === passwordsTableBody.rows.length
+                    : !(document.querySelectorAll('input[type="checkbox"][name="record"]').length === passwordsTableBody.rows.length);
+            }
 
-      function loadPasswords() {
-        passwordsTableBody.innerHTML = "";
-        const passwords = JSON.parse(localStorage.getItem("passwords")) || [];
+            function loadPasswords() {
+                passwordsTableBody.innerHTML = "";
+                const passwords = JSON.parse(localStorage.getItem("passwords")) || [];
 
-        if (passwords.length > 0) {
-          passwords.forEach((password, index) => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-						<td><input type="checkbox" onclick="recCheck(this)" name= "record" id="${index}"/></td>
-						<td>${password.login}</td>
-						<td>
-							<div class="password-container">
-								<input type="password" value="${password.password}" readonly>
-								<span class="firstIcon" onclick="copyPassword(this)">
-									<i class="fas fa-copy" title="Copy password"></i>
-								</span>
-								<span class="secondIcon" onclick="togglePassword(this)">
-									<i class="fas fa-eye-slash" title="Show Password"></i>
-								</span>
-							</div>
-						</td>
-						<td><a href="${password.url}" target="_blank">${password.url}</a></td>
-					`;
-            passwordsTableBody.appendChild(row);
-          });
-        } else {
-          const row = document.createElement("tr");
-          row.innerHTML = '<td colspan="4" style="text-align: center;">Table is empty</td>';
-          passwordsTableBody.appendChild(row);
-        }
+                if (passwords.length > 0) {
+                    passwords.forEach((password, index) => {
+                        const row = document.createElement("tr");
+							row.innerHTML = `
+							<td><input type="checkbox" onclick="recCheck(this)" name= "record" id="${index}"/></td>
+							<td>${password.login}</td>
+							<td>
+								<div class="password-container">
+									<input type="password" value="${password.password}" readonly>
+									<span class="firstIcon" onclick="copyPassword(this)">
+										<i class="fas fa-copy" title="Copy password"></i>
+									</span>
+									<span class="secondIcon" onclick="togglePassword(this)">
+										<i class="fas fa-eye-slash" title="Show Password"></i>
+									</span>
+								</div>
+							</td>
+							<td><a href="${password.url}" target="_blank">${password.url}</a></td>
+						`;
+                        passwordsTableBody.appendChild(row);
+                    });
+                } else {
+                    const row = document.createElement("tr");
+                    row.innerHTML = '<td colspan="4" style="text-align: center;">Table is empty</td>';
+                    passwordsTableBody.appendChild(row);
+                }
 
-        deleteRecords.hidden = passwords.length === 0;
-        selectAll.disabled = passwords.length === 0;
-      }
+                deleteRecords.hidden = passwords.length === 0;
+                selectAll.disabled = passwords.length === 0;
+            }
 
-      function addPassword(login, password, url) {
-        const passwords = JSON.parse(localStorage.getItem("passwords")) || [];
-        passwords.push({ login, password, url });
-        localStorage.setItem("passwords", JSON.stringify(passwords));
-        loadPasswords();
-      }
+            function addPassword(login, password, url) {
+                const passwords = JSON.parse(localStorage.getItem("passwords")) || [];
+                passwords.push({ login, password, url });
+                localStorage.setItem("passwords", JSON.stringify(passwords));
+                loadPasswords();
+            }
 
-      function deletePassword(index) {
-        const passwords = JSON.parse(localStorage.getItem("passwords")) || [];
-        passwords.splice(index, 1);
-        localStorage.setItem("passwords", JSON.stringify(passwords));
-        loadPasswords();
-      }
+            function deletePassword(index) {
+                const passwords = JSON.parse(localStorage.getItem("passwords")) || [];
+                passwords.splice(index, 1);
+                localStorage.setItem("passwords", JSON.stringify(passwords));
+                loadPasswords();
+            }
 
-      passwordForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const login = document.getElementById("login").value;
-        const password = document.getElementById("password").value;
-        const url = document.getElementById("url").value;
-        addPassword(login, password, url);
-        passwordForm.reset();
-      });
+            passwordForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const login = document.getElementById("login").value;
+                const password = document.getElementById("password").value;
+                const url = document.getElementById("url").value;
+                addPassword(login, password, url);
+                passwordForm.reset();
+            });
 
-      loadPasswords();
-    </script>
-    <script>
-      if (navigator.serviceWorker) {
-        navigator.serviceWorker.register("/SoftDevLab2/sw.js", { scope: "/SoftDevLab2/" }).catch((error) => {});
-      }
-    </script>
-  </body>
+            loadPasswords();
+        </script>
+        <script>
+            if (navigator.serviceWorker) {
+                navigator.serviceWorker.register("/SoftDevLab2/sw.js", { scope: "/SoftDevLab2/" }).catch((error) => {});
+            }
+        </script>
+    </body>
 </html>
