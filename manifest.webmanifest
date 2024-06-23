@@ -10,8 +10,7 @@
 	"icons": [
 		{
 			"src": "/SoftDevLab2/favicon.png",
-			"type": "image/png",
-			"sizes": "512x512"
+			"type": "image/png"
 		}
 	]
 }
