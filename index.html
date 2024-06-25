@@ -185,19 +185,23 @@
                         <input type="number" step="1" min="4" max="128" value="16" id="passwordRange" onblur="this.value = Math.max(Math.min(this.value, 128), 4)" onmousewheel />
                         <li>
                             <input type="checkbox" id="uppercase" name="uppercase" checked />
-                            <label for="uppercase">Uppercase (A - Z)</label>
+                            <label for="uppercase">Uppercase (A-Z)</label>
                         </li>
                         <li>
                             <input type="checkbox" id="lowercase" name="lowercase" checked />
-                            <label for="lowercase">Lowercase (a - z)</label>
+                            <label for="lowercase">Lowercase (a-z)</label>
                         </li>
                         <li>
                             <input type="checkbox" id="numbers" name="numbers" checked />
-                            <label for="numbers">Numbers (0 - 9)</label>
+                            <label for="numbers">Numbers (0-9)</label>
                         </li>
                         <li>
                             <input type="checkbox" id="symbols" name="symbols" checked />
                             <label for="symbols">Special symbols (# $ % & @ ^ ` ~)</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="exclude-similar" name="exclude-similar" checked />
+                            <label for="symbols">Exclude visually similar characters (# $ % & @ ^ ` ~)</label>
                         </li>
                     </ul>
                 </details>
@@ -245,8 +249,9 @@
             const lowercase = document.getElementById("lowercase");
             const numbers = document.getElementById("numbers");
             const symbols = document.getElementById("symbols");
+            const excludeSimilar = document.getElementById("exclude-similar");
 
-            [uppercase, lowercase, numbers, symbols].forEach((checkbox) => {
+            [uppercase, lowercase, numbers, symbols, excludeSimilar].forEach((checkbox) => {
                 checkbox.addEventListener("change", () => generatePassword());
             });
 
@@ -260,7 +265,7 @@
                 }
 
                 function passwordIsValid(password) {
-                    return charactersArray.every((group) => [...group].some((char) => password.includes(char)));
+                    return charactersArray.every((group) => group.split('').some((char) => password.includes(char)));
                 }
 
                 let password;
@@ -269,6 +274,12 @@
                 } while (!passwordIsValid(password));
 
                 return password;
+            }
+            
+            const similarCharacters = 'iloIO01'; // '|'
+            
+            function filterSimilarCharacters(str) {
+            	return str.split('').filter(char => !similarCharacters.includes(char)).join('');
             }
 
             function generatePassword() {
@@ -280,6 +291,8 @@
                 if (symbols.checked) charactersArray.push("#$%&@^`~");
 
 		if (charactersArray.length === 0) return;
+		if (excludeSimilar) charactersArray = charactersArray.map(group => filterSimilarCharacters(group));
+		
                 passwordField.value = createPassword(passwordRange.valueAsNumber, charactersArray);
 		
                 if (passwordField.getAttribute("type") === "password") {
