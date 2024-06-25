@@ -236,7 +236,7 @@
             });
 
             function fixURL(urlInput) {
-                if (!urlInput.value.includes("://")) {
+                if (urlInput.length > 0 && !urlInput.value.includes("://")) {
                     urlInput.value = "https://" + urlInput.value;
                 }
             }
@@ -278,12 +278,13 @@
                 if (lowercase.checked) charactersArray.push("abcdefghijklmnopqrstuvwxyz");
                 if (numbers.checked) charactersArray.push("0123456789");
                 if (symbols.checked) charactersArray.push("#$%&@^`~");
-		
+
+		if (charactersArray.length === 0) return;
                 passwordField.value = createPassword(passwordRange.valueAsNumber, charactersArray);
 		
                 if (passwordField.getAttribute("type") === "password") {
                     passwordField.setAttribute("type", "text");
-                    element.innerHTML = '<i class="fas fa-eye" title="Hide Password"></i>';
+                    eyeIcon.innerHTML = '<i class="fas fa-eye" title="Hide Password"></i>';
                 }
             }
 
@@ -395,7 +396,7 @@
         </script>
         <script>
             if (navigator.serviceWorker) {
-                window.addEventListener('load', function() {
+                window.addEventListener('load', () => {
                     navigator.serviceWorker.register("/SoftDevLab2/sw.js", { scope: "/SoftDevLab2/" }).catch((error) => {});
                 });
             }
