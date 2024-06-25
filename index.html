@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+<head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=no" />
         <meta name="google" content="notranslate" />
@@ -33,6 +33,7 @@
                 padding: 8px;
                 text-align: left;
                 white-space: nowrap;
+		vertical-align: middle;
             }
             th {
                 background-color: #f2f2f2;
@@ -146,10 +147,10 @@
             .disabled-span {
                 pointer-events: none;
             }
-        </style>
-    </head>
-    <body>
-        <h1>Password Manager</h1>
+	</style>
+</head>
+<body>
+	<h1>Password Manager</h1>
         <div class="table-container">
             <table>
                 <thead>
@@ -221,7 +222,7 @@
                 });
             });
 
-            deleteRecords.addEventListener("click", function () {
+            deleteRecords.addEventListener("click", () => {
                 const rowsToDelete = [];
                 document.querySelectorAll('input[type="checkbox"][name="record"]:checked').forEach((checkbox) => {
                     rowsToDelete.push(checkbox.closest("tr").rowIndex - 1);
@@ -277,10 +278,9 @@
                 if (lowercase.checked) charactersArray.push("abcdefghijklmnopqrstuvwxyz");
                 if (numbers.checked) charactersArray.push("0123456789");
                 if (symbols.checked) charactersArray.push("#$%&@^`~");
-
-                const password = createPassword(passwordRange.value, charactersArray);
-
-                passwordField.value = password;
+		
+                passwordField.value = createPassword(passwordRange.valueAsNumber, charactersArray);
+		
                 if (passwordField.getAttribute("type") === "password") {
                     passwordField.setAttribute("type", "text");
                     element.innerHTML = '<i class="fas fa-eye" title="Hide Password"></i>';
@@ -298,10 +298,10 @@
                 passwordField.setAttribute("type", type);
 
                 element.innerHTML = type === "password" 
-					? '<i class="fas fa-eye-slash" title="Show Password"></i>' 
-					: '<i class="fas fa-eye" title="Hide Password"></i>';
+			? '<i class="fas fa-eye-slash" title="Show Password"></i>' 
+			: '<i class="fas fa-eye" title="Hide Password"></i>';
 
-                passwordField.focus();
+                type === "text" ? passwordField.focus() : 0;
             }
 
             function copyPassword(element) {
@@ -327,7 +327,7 @@
                 }, 200);
             }
 
-            function recCheck(element) {
+            function recordCheck(element) {
                 selectAllCheck.checked = element.checked
                     ? document.querySelectorAll('input[type="checkbox"][name="record"]:checked').length === passwordsTableBody.rows.length
                     : !(document.querySelectorAll('input[type="checkbox"][name="record"]').length === passwordsTableBody.rows.length);
@@ -340,22 +340,22 @@
                 if (passwords.length > 0) {
                     passwords.forEach((password, index) => {
                         const row = document.createElement("tr");
-							row.innerHTML = `
-							<td><input type="checkbox" onclick="recCheck(this)" name= "record" id="${index}"/></td>
-							<td>${password.login}</td>
-							<td>
-								<div class="password-container">
-									<input type="password" value="${password.password}" readonly>
-									<span class="firstIcon" onclick="copyPassword(this)">
-										<i class="fas fa-copy" title="Copy password"></i>
-									</span>
-									<span class="secondIcon" onclick="togglePassword(this)">
-										<i class="fas fa-eye-slash" title="Show Password"></i>
-									</span>
-								</div>
-							</td>
-							<td><a href="${password.url}" target="_blank">${password.url}</a></td>
-						`;
+			row.innerHTML = `
+				<td><input type="checkbox" onclick="recordCheck(this)" name= "record" id="${index}"/></td>
+				<td>${password.login}</td>
+				<td>
+					<div class="password-container">
+						<input type="password" value="${password.password}" readonly>
+						<span class="firstIcon" onclick="copyPassword(this)">
+							<i class="fas fa-copy" title="Copy password"></i>
+						</span>
+						<span class="secondIcon" onclick="togglePassword(this)">
+							<i class="fas fa-eye-slash" title="Show Password"></i>
+						</span>
+					</div>
+				</td>
+				<td><a href="${password.url}" target="_blank">${password.url}</a></td>
+			`;
                         passwordsTableBody.appendChild(row);
                     });
                 } else {
@@ -400,5 +400,5 @@
                 });
             }
         </script>
-    </body>
+</body>
 </html>
