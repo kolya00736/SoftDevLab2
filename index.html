@@ -236,7 +236,7 @@
             });
 
             function fixURL(urlInput) {
-                if (urlInput.length > 0 && !urlInput.value.includes("://")) {
+                if (urlInput.value.length > 0 && !urlInput.value.includes("://")) {
                     urlInput.value = "https://" + urlInput.value;
                 }
             }
