@@ -1,167 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=no" />
-        <meta name="google" content="notranslate" />
-        <link rel="icon" href="favicon.ico" />
-        <link rel="manifest" href="/SoftDevLab2/manifest.json" />
-        <title>Password Manager</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 10px;
-            }
-            h1 {
-                text-align: center;
-            }
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-bottom: 10px;
-            }
-            .table-container {
-                overflow-x: auto;
-            }
-            td:first-child {
-                width: 1%;
-            }
-            th,
-            td {
-                border: 1px solid #ccc;
-                padding: 8px;
-                text-align: left;
-                white-space: nowrap;
-		vertical-align: middle;
-            }
-            th {
-                background-color: #f2f2f2;
-            }
-            input[type="text"],
-            input[type="password"],
-            input[type="url"],
-            input[type="number"] {
-                width: 100%;
-                padding: 8px;
-                margin-bottom: 10px;
-                border-radius: 5px;
-                border: 1px solid #767676;
-                box-sizing: border-box;
-                outline: none;
-            }
-            input[id="password"] {
-                padding-right: 70px;
-            }
-            table input[type="password"],
-            table input[type="text"] {
-                margin-bottom: 0px;
-                padding-right: 70px;
-                min-width: 170px;
-            }
-            input[type="number"] {
-                width: 70px;
-                margin-bottom: 0;
-            }
-            button {
-                width: 100%;
-                padding: 10px 15px;
-                margin-top: 5px;
-                background-color: #4caf50;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-            button:hover {
-                background-color: #45a049;
-            }
-            .password-container {
-                position: relative;
-            }
-            .firstIcon {
-                position: absolute;
-                top: 40%;
-                right: 40px;
-                transform: translateY(-50%);
-                background: none;
-                border: none;
-                cursor: pointer;
-            }
-            .secondIcon {
-                position: absolute;
-                top: 40%;
-                right: 10px;
-                transform: translateY(-50%);
-                background: none;
-                border: none;
-                cursor: pointer;
-            }
-            table .firstIcon {
-                top: 50%;
-            }
-            table .secondIcon {
-                top: 50%;
-            }
-            legend {
-                padding: 3px 6px;
-            }
-            fieldset {
-                border: 1px solid #cccccc;
-                margin: auto;
-                margin-top: 10px;
-                padding-bottom: 15px;
-            }
-            input[type="checkbox"] {
-                margin: 0;
-                cursor: pointer;
-                vertical-align: middle;
-            }
-            label {
-                cursor: pointer;
-                vertical-align: middle;
-            }
-            ul {
-                margin: 0;
-                padding: 5px 10px;
-                list-style-type: none;
-            }
-            li {
-                margin: 10px 0;
-            }
-            details {
-                border: 1px solid #757575;
-                border-radius: 5px;
-                margin-bottom: 10px;
-                font-size: 13px;
-            }
-            summary {
-                cursor: pointer;
-                color: #757575;
-                padding: 8px;
-            }
-            .disabled-span {
-                pointer-events: none;
-            }
-            .fas {
-                width: 20px;
-                height: 16px;
-                display: inline-block;
-		background-size: contain;
-		background-repeat: no-repeat;
-            }
-            .eye-slash {
-                background-image: url('img/eye-slash.svg');
-            }
-            .eye {
-                background-image: url('img/eye.svg');
-            }
-            .sync-alt{
-                background-image: url('img/sync-alt.svg');
-            }
-            .copy {
-                background-image: url('img/copy.svg');
-            }
-	</style>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=no" />
+	<meta name="google" content="notranslate" />
+	<title>Password Manager</title>
+	<link rel="icon" href="favicon.ico" />
+	<link rel="stylesheet" href="styles.css">
+	<link rel="manifest" href="/TSU-SoftDevLab2/manifest.json" />
 </head>
 <body>
 	<h1>Password Manager</h1>
@@ -199,15 +45,15 @@
                         <input type="number" step="1" min="4" max="128" value="16" id="passwordRange" onblur="this.value = Math.max(Math.min(this.value, 128), 4)" onmousewheel />
                         <li>
                             <input type="checkbox" id="uppercase" name="uppercase" checked />
-                            <label for="uppercase">Uppercase (A-Z)</label>
+                            <label for="uppercase">Uppercase (A - Z)</label>
                         </li>
                         <li>
                             <input type="checkbox" id="lowercase" name="lowercase" checked />
-                            <label for="lowercase">Lowercase (a-z)</label>
+                            <label for="lowercase">Lowercase (a - z)</label>
                         </li>
                         <li>
                             <input type="checkbox" id="numbers" name="numbers" checked />
-                            <label for="numbers">Numbers (0-9)</label>
+                            <label for="numbers">Numbers (0 - 9)</label>
                         </li>
                         <li>
                             <input type="checkbox" id="symbols" name="symbols" checked />
@@ -304,8 +150,8 @@
                 if (numbers.checked) charactersArray.push("0123456789");
                 if (symbols.checked) charactersArray.push("#$%&@^`~");
 
-		if (charactersArray.length === 0) return;
-		if (excludeSimilar) charactersArray = charactersArray.map(group => filterSimilarCharacters(group));
+				if (charactersArray.length === 0) return;
+				if (excludeSimilar) charactersArray = charactersArray.map(group => filterSimilarCharacters(group));
 		
                 passwordField.value = createPassword(passwordRange.valueAsNumber, charactersArray);
 		
@@ -326,8 +172,8 @@
                 passwordField.setAttribute("type", type);
 
                 element.innerHTML = type === "password" 
-			? '<i class="fas eye-slash" title="Show Password"></i>' 
-			: '<i class="fas eye" title="Hide Password"></i>';
+					? '<i class="fas eye-slash" title="Show Password"></i>' 
+					: '<i class="fas eye" title="Hide Password"></i>';
 
                 type === "text" ? passwordField.focus() : 0;
             }
@@ -368,22 +214,22 @@
                 if (passwords.length > 0) {
                     passwords.forEach((password, index) => {
                         const row = document.createElement("tr");
-			row.innerHTML = `
-				<td><input type="checkbox" onclick="recordCheck(this)" name= "record" id="${index}"/></td>
-				<td>${password.login}</td>
-				<td>
-					<div class="password-container">
-						<input type="password" value="${password.password}" readonly>
-						<span class="firstIcon" onclick="copyPassword(this)">
-							<i class="fas copy" title="Copy password"></i>
-						</span>
-						<span class="secondIcon" onclick="togglePassword(this)">
-							<i class="fas eye-slash" title="Show Password"></i>
-						</span>
-					</div>
-				</td>
-				<td><a href="${password.url}" target="_blank">${password.url}</a></td>
-			`;
+						row.innerHTML = `
+							<td><input type="checkbox" onclick="recordCheck(this)" name= "record" id="${index}"/></td>
+							<td>${password.login}</td>
+							<td>
+								<div class="password-container">
+									<input type="password" value="${password.password}" readonly>
+									<span class="firstIcon" onclick="copyPassword(this)">
+										<i class="fas copy" title="Copy password"></i>
+									</span>
+									<span class="secondIcon" onclick="togglePassword(this)">
+										<i class="fas eye-slash" title="Show Password"></i>
+									</span>
+								</div>
+							</td>
+							<td><a href="${password.url}" target="_blank">${password.url}</a></td>
+						`;
                         passwordsTableBody.appendChild(row);
                     });
                 } else {
@@ -423,9 +269,7 @@
         </script>
         <script>
             if (navigator.serviceWorker) {
-                window.addEventListener('load', () => {
-                    navigator.serviceWorker.register("/SoftDevLab2/sw.js", { scope: "/SoftDevLab2/" }).catch((error) => {});
-                });
+                navigator.serviceWorker.register("/TSU-SoftDevLab2/sw.js", { scope: "/TSU-SoftDevLab2/" }).catch((error) => {});
             }
         </script>
 </body>
