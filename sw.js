@@ -49,9 +49,6 @@ self.addEventListener('fetch', (event) => {
 				return response;
 			}
 			return fetch(event.request)
-		}).catch((err) => {
-			console.log('err');
-			return caches.match('index.html');
 		})
 	);
 });
