@@ -44,6 +44,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
 	console.log(event.request);
 	event.respondWith(
+		console.log(caches);
 		caches.match(event.request).then((response) => {
 			if (response) {
 				return response;
