@@ -21,7 +21,7 @@ self.addEventListener('install', event => {
 	);
 });
 
-self.addEventListener('activate', event => {
+self.addEventListener('activate', (event) => {
 	event.waitUntil(
 		caches.keys().then(keyList => {
 			var cacheWhitelist = keyList.filter(key => {
@@ -39,18 +39,15 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', function(event) {
-  console.log('Fetch event for ', event.request.url);
-  event.respondWith(
-    caches.match(event.request).then(function(response) {
-      if (response) {
-        return response;
-      }
-      return fetch(event.request)
-
-    }).catch(function(error) {
-
-      return caches.match('index.html');
-
-    })
-  );
+	alert(event.request.url);
+	event.respondWith(
+		caches.match(event.request).then((response) => {
+			if (response) {
+				return response;
+			}
+			return fetch(event.request)
+		}).catch((err) => {
+			return caches.match('index.html');
+		})
+	);
 });
