@@ -71,6 +71,8 @@ button:hover {
 }
 .password-container {
 	position: relative;
+}
+.password-form {
 	margin: 10px 0;
 }
 .firstIcon,
