@@ -42,7 +42,8 @@ input[type="number"] {
 	outline: none;
 }
 input[id="password"],
-table input[type="password"] {
+table input[type="password"],
+table input[type="text"] {
 	padding-right: 70px;
 }
 table input[type="password"],
@@ -57,6 +58,7 @@ input[type="number"] {
 button {
 	width: 100%;
 	padding: 10px 15px;
+	margin-top: 5px;
 	background-color: #4caf50;
 	color: white;
 	border: none;
