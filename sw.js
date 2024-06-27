@@ -13,6 +13,8 @@ const URLS = [
 	`${PATH}/img/copy.svg`,
 	`${PATH}/icons/favicon.ico`,
 	`${PATH}/icons/apple-touch-icon.png`
+	`${PATH}/icons/icon-192x192.png`
+	`${PATH}/icons/icon-512x512.png`
 ];
 
 self.addEventListener('install', event => {
