@@ -11,9 +11,9 @@ const URLS = [
 	`${PATH}/img/eye.svg`,
 	`${PATH}/img/sync-alt.svg`,
 	`${PATH}/img/copy.svg`,
-	`${PATH}/img/icons/favicon.png`,
-	`${PATH}/img/icons/icon-192x192.png`,
-	`${PATH}/img/icons/icon-512x512.png`,
+	`${PATH}/icons/favicon.ico`,
+	`${PATH}/icons/icon-192x192.png`,
+	`${PATH}/icons/icon-512x512.png`,
 ];
 
 self.addEventListener('install', (event) => {
