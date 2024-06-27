@@ -1,7 +1,7 @@
 {
 	"name": "Password Manager",
 	"description": "Browser-based password manager",
-	"id": "/SoftDevLab2/",
+	"start_url": "",
 	"background_color": "#ffffff",
 	"theme_color": "#ffffff",
 	"display": "standalone",
