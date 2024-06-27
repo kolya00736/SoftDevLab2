@@ -10,12 +10,8 @@
 	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 	<link rel="stylesheet" href="styles.css">
 	<link rel="manifest" href="/TSU-SoftDevLab2/manifest.json" />
-	<link rel="preload" href="img/eye-slash.svg" as="image" type="image/svg+xml" />
-    <link rel="preload" href="img/eye.svg" as="image" type="image/svg+xml" />
-    <link rel="preload" href="img/sync-alt.svg" as="image" type="image/svg+xml" />
-    <link rel="preload" href="img/copy.svg" as="image" type="image/svg+xml" />
 </head>
-<body>
+<body>	
 	<h1>Password Manager</h1>
 	<div class="table-container">
 		<table>
@@ -41,6 +37,7 @@
 					<i class="fas sync-alt" title="Generate Password"></i>
 				</span>
 				<span class="secondIcon" id="eyeIcon" onclick="togglePassword(this)">
+					<i class="eye" hidden></i>
 					<i class="fas eye-slash" title="Show Password"></i>
 				</span>
 			</div>
