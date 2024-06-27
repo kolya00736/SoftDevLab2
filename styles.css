@@ -33,7 +33,6 @@ input[type="url"],
 input[type="number"] {
 	width: 100%;
 	padding: 8px;
-	margin-bottom: 10px;
 	border-radius: 5px;
 	border: 1px solid #767676;
 	box-sizing: border-box;
@@ -67,12 +66,13 @@ button:hover {
 }
 .password-container {
 	position: relative;
+	margin: 10px 0;
 }
 .firstIcon,
 .secondIcon {
 	display: flex;
 	position: absolute;
-	top: 40%;
+	top: 50%;
 	transform: translateY(-50%);
 	background: none;
 	border: none;
@@ -83,10 +83,6 @@ button:hover {
 }
 .secondIcon {
 	right: 10px;
-}
-table .firstIcon,
-table .secondIcon {
-	top: 50%;
 }
 legend {
 	padding: 3px 6px;
