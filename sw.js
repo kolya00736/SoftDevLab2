@@ -12,11 +12,10 @@ const URLS = [
 	`${PATH}/img/sync-alt.svg`,
 	`${PATH}/img/copy.svg`,
 	`${PATH}/icons/favicon.ico`,
-	`${PATH}/icons/icon-192x192.png`,
-	`${PATH}/icons/icon-512x512.png`,
+	`${PATH}/icons/apple-touch-icon.png`
 ];
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', event => {
 	event.waitUntil(
 		caches.open(CACHE_NAME).then(cache => {
 			return cache.addAll(URLS);
@@ -24,7 +23,7 @@ self.addEventListener('install', (event) => {
 	);
 });
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', event => {
 	event.waitUntil(
 		caches.keys().then(keyList => {
 			const cacheWhitelist = keyList.filter(key => {
@@ -41,14 +40,10 @@ self.addEventListener('activate', (event) => {
 	);
 });
 
-self.addEventListener('fetch', (event) => {
-	console.log(event.request);
+self.addEventListener('fetch', event => {
 	event.respondWith(
-		caches.match(event.request).then((response) => {
-			if (response) {
-				return response;
-			}
-			return fetch(event.request)
+		caches.match(event.request).then(response => {
+			return response || fetch(event.request);
 		})
 	);
 });
