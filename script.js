@@ -64,7 +64,7 @@ function createPassword(length, charactersArray) {
 	return password;
 }
 
-const similarCharacters = 'iloIO01'; // '|'
+const similarCharacters = "iloIO01"; // '|'
 
 function filterSimilarCharacters(str) {
 	return str.split('').filter(char => !similarCharacters.includes(char)).join('');
@@ -200,7 +200,7 @@ if (navigator.serviceWorker) {
 	});
 }
 
-['img/eye.svg', 'img/copy.svg'].forEach((url) => {
+["img/eye.svg", "img/copy.svg"].forEach((url) => {
 	var img = new Image();
 	img.src = url;
 });

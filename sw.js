@@ -27,7 +27,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
 	event.waitUntil(
 		caches.keys().then(keyList => {
-			var cacheWhitelist = keyList.filter(key => {
+			const cacheWhitelist = keyList.filter(key => {
 				return key.indexOf(APP_PREFIX) === 0;
 			});
 			cacheWhitelist.push(CACHE_NAME);
@@ -44,13 +44,13 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
 	console.log(event.request);
 	event.respondWith(
-		console.log(caches);
 		caches.match(event.request).then((response) => {
 			if (response) {
 				return response;
 			}
 			return fetch(event.request)
 		}).catch((err) => {
+			console.log('err');
 			return caches.match('index.html');
 		})
 	);
