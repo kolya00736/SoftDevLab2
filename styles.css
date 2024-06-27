@@ -68,27 +68,25 @@ button:hover {
 .password-container {
 	position: relative;
 }
-.firstIcon {
+.firstIcon,
+.secondIcon {
+	display: flex;
 	position: absolute;
-	top: 40%;
-	right: 40px;
+	top: 35%;
 	transform: translateY(-50%);
 	background: none;
 	border: none;
 	cursor: pointer;
 }
+.firstIcon {
+	right: 40px;
+}
 .secondIcon {
-	position: absolute;
-	top: 40%;
 	right: 10px;
-	transform: translateY(-50%);
-	background: none;
-	border: none;
-	cursor: pointer;
 }
 table .firstIcon,
 table .secondIcon {
-	top: 55%;
+	top: 50%;
 }
 legend {
 	padding: 3px 6px;
@@ -136,6 +134,7 @@ summary {
 	display: inline-block;
 	background-size: contain;
 	background-repeat: no-repeat;
+	background-position: center center;
 }
 .eye-slash {
 	background-image: url('img/eye-slash.svg');
