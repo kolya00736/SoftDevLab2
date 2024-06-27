@@ -194,7 +194,7 @@ passwordForm.addEventListener("submit", (e) => {
 });
 
 if (navigator.serviceWorker) {
-	navigator.serviceWorker.register("/TSU-SoftDevLab2/sw.js", { scope: "/TSU-SoftDevLab2/" })
+	navigator.serviceWorker.register("/SoftDevLab2/sw.js")
 	.catch((err) => {
 		console.log('ServiceWorker registration failed: ', err);
 	});

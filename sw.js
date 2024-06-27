@@ -1,47 +1,57 @@
-var GHPATH = '/SoftDevLab2';
-var APP_PREFIX = 'password-manager-cache-';
-var VERSION = 'v1';
+const PATH = '/SoftDevLab2';
+const APP_PREFIX = 'password-manager-';
+const CACHE_NAME = APP_PREFIX + 'cache-v1';
 
-var URLS = [    
-	`${GHPATH}/`,
-	`${GHPATH}/index.html`,
-	`${GHPATH}/favicon.png`,
-	'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css'
-]
-
-var CACHE_NAME = APP_PREFIX + VERSION
-self.addEventListener('fetch', event => {
-	event.respondWith(
-		caches.match(event.request).then(function (request) {
-			if (request) {
-				return request;
-			}
-			return fetch(event.request);
-		})
-	)
-})
+const URLS = [    
+	`${PATH}/`,
+	`${PATH}/index.html`,
+	`${PATH}/styles.css`,
+	`${PATH}/script.js`,
+	`${PATH}/img/eye-slash.svg`,
+	`${PATH}/img/eye.svg`,
+	`${PATH}/img/sync-alt.svg`,
+	`${PATH}/img/copy.svg`,
+];
 
 self.addEventListener('install', event => {
 	event.waitUntil(
-		caches.open(CACHE_NAME).then(function (cache) {
+		caches.open(CACHE_NAME).then(cache => {
 			return cache.addAll(URLS);
 		})
-	)
-})
+	);
+});
 
 self.addEventListener('activate', event => {
 	event.waitUntil(
-		caches.keys().then(function (keyList) {
-			var cacheWhitelist = keyList.filter(function (key) {
-				return key.indexOf(APP_PREFIX)
+		caches.keys().then(keyList => {
+			var cacheWhitelist = keyList.filter(key => {
+				return key.indexOf(APP_PREFIX) === 0;
 			});
 			cacheWhitelist.push(CACHE_NAME);
-			
-			return Promise.all(keyList.map(function (key, i) {
+
+			return Promise.all(keyList.map((key, i) => {
 				if (cacheWhitelist.indexOf(key) === -1) {
-					return caches.delete(keyList[i])
+					return caches.delete(keyList[i]);
 				}
 			}));
 		})
-	)
-})
+	);
+});
+
+self.addEventListener('fetch', event => {
+	if (event.request.mode === 'navigate') {
+		event.respondWith(
+			caches.match('/index.html').then(response => {
+				return response || fetch(event.request);
+			}).catch(() => {
+				return caches.match('/index.html');
+			})
+		);
+	} else {
+		event.respondWith(
+			caches.match(event.request).then(response => {
+				return response || fetch(event.request);
+			})
+		);
+	}
+});
