@@ -38,20 +38,19 @@ self.addEventListener('activate', event => {
 	);
 });
 
-self.addEventListener('fetch', event => {
-	if (event.request.mode === 'navigate') {
-		event.respondWith(
-			caches.match('/index.html').then(response => {
-				return response || fetch(event.request);
-			}).catch(() => {
-				return caches.match('/index.html');
-			})
-		);
-	} else {
-		event.respondWith(
-			caches.match(event.request).then(response => {
-				return response || fetch(event.request);
-			})
-		);
-	}
+self.addEventListener('fetch', function(event) {
+  console.log('Fetch event for ', event.request.url);
+  event.respondWith(
+    caches.match(event.request).then(function(response) {
+      if (response) {
+        return response;
+      }
+      return fetch(event.request)
+
+    }).catch(function(error) {
+
+      return caches.match('index.html');
+
+    })
+  );
 });
